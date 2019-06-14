@@ -10,6 +10,12 @@ films = []
 logins = []
 passwords = []
 times = []
+liczbaFilmow = 69
+liczbaAktorow = 500
+liczbaRezyserow = 100 + liczbaAktorow
+liczbaUzytkownikow = 1000
+liczbaOcen = 500000
+liczbaAktorowGrajacychWFilmach = liczbaAktorow * 10
 profession = ["aktor", "rezyser"]
 
 f = open('dane_do_generowania.csv', encoding="utf8")
@@ -38,11 +44,11 @@ with aktor:
     writer = csv.DictWriter(aktor, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(0, 500):
+    for i in range(0, liczbaAktorow):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], names[randint(0, 69)])
-        tab.__setitem__(header[2], surnames[randint(0, 69)])
-        tab.__setitem__(header[3], datesOfBirth[randint(0, 69)])
+        tab.__setitem__(header[1], names[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[2], surnames[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[3], datesOfBirth[randint(0, liczbaFilmow)])
         tab.__setitem__(header[4], profession[0])
         writer.writerow(tab)
         tab.clear()
@@ -52,11 +58,11 @@ with rezyser:
     writer = csv.DictWriter(rezyser, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(500, 600):
+    for i in range(liczbaAktorow, liczbaRezyserow):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], names[randint(0, 69)])
-        tab.__setitem__(header[2], surnames[randint(0, 69)])
-        tab.__setitem__(header[3], datesOfBirth[randint(0, 69)])
+        tab.__setitem__(header[1], names[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[2], surnames[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[3], datesOfBirth[randint(0, liczbaFilmow)])
         tab.__setitem__(header[4], profession[1])
         writer.writerow(tab)
         tab.clear()
@@ -82,13 +88,13 @@ with uzytkownik:
     writer = csv.DictWriter(uzytkownik, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(0, 10000):
+    for i in range(0, liczbaUzytkownikow):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], names[randint(0, 69)])
-        tab.__setitem__(header[2], surnames[randint(0, 69)])
-        tab.__setitem__(header[3], datesOfBirth[randint(0, 69)])
-        tab.__setitem__(header[4], logins[randint(0, 69)] + str(i))
-        tab.__setitem__(header[4], passwords[randint(0, 69)] + str(i))
+        tab.__setitem__(header[1], names[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[2], surnames[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[3], datesOfBirth[randint(0, liczbaFilmow)])
+        tab.__setitem__(header[4], logins[randint(0, liczbaFilmow)] + str(i))
+        tab.__setitem__(header[4], passwords[randint(0, liczbaFilmow)] + str(i))
         writer.writerow(tab)
         tab.clear()
 header = ['id', 'idUzytkownika', 'dataWstawienia', 'wartoscOceny']
@@ -98,10 +104,10 @@ with ocena:
     writer = csv.DictWriter(ocena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(0, 1000000):
+    for i in range(0, liczbaOcen):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(0, 600))
-        tab.__setitem__(header[2], dates[randint(0, 69)])
+        tab.__setitem__(header[1], randint(0, liczbaRezyserow))
+        tab.__setitem__(header[2], dates[randint(0, liczbaFilmow)])
         tab.__setitem__(header[3], randint(1, 5))
         writer.writerow(tab)
         tab.clear()
@@ -112,9 +118,9 @@ with filmOcena:
     writer = csv.DictWriter(filmOcena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(0, 500000):
+    for i in range(0, int(liczbaOcen/2)):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(0, 69))
+        tab.__setitem__(header[1], randint(0, liczbaFilmow))
         writer.writerow(tab)
         tab.clear()
 header = ['idOceny', 'idAktor']
@@ -124,9 +130,9 @@ with aktorOcena:
     writer = csv.DictWriter(aktorOcena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(500000, 750000):
+    for i in range(int(liczbaOcen/2), int(liczbaOcen/2) + int(liczbaOcen/4)):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(0, 500))
+        tab.__setitem__(header[1], randint(0, liczbaAktorow))
         writer.writerow(tab)
         tab.clear()
 header = ['idOceny', 'idRezyser']
@@ -136,9 +142,9 @@ with rezyserOcena:
     writer = csv.DictWriter(rezyserOcena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(750000, 1000000):
+    for i in range(int(liczbaOcen/2) + int(liczbaOcen/4), liczbaOcen):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(500, 600))
+        tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow))
         writer.writerow(tab)
         tab.clear()
 header = ['idFilm', 'idRezyser']
@@ -150,7 +156,7 @@ with rezyserFilm:
     tab = {}
     for i in range(0, films.__len__()):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(500, 600))
+        tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow))
         writer.writerow(tab)
         tab.clear()
 header = ['idFilm', 'idAktor']
@@ -160,8 +166,8 @@ with aktorFilm:
     writer = csv.DictWriter(aktorFilm, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(0, 10000):
-        tab.__setitem__(header[0], randint(0, 69))
-        tab.__setitem__(header[1], randint(0, 500))
+    for i in range(0, liczbaAktorowGrajacychWFilmach):
+        tab.__setitem__(header[0], randint(0, liczbaFilmow))
+        tab.__setitem__(header[1], randint(0, liczbaAktorow))
         writer.writerow(tab)
         tab.clear()

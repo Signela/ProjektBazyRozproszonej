@@ -11,11 +11,11 @@ logins = []
 passwords = []
 times = []
 liczbaFilmow = 69
-liczbaAktorow = 500
-liczbaRezyserow = 100 + liczbaAktorow
+liczbaAktorow = 100
+liczbaRezyserow = 30 + liczbaAktorow
 liczbaUzytkownikow = 1000
 liczbaOcen = 500000
-liczbaAktorowGrajacychWFilmach = liczbaAktorow * 10
+liczbaAktorowGrajacychWFilmach = liczbaAktorow * 2
 profession = ["aktor", "rezyser"]
 
 f = open('dane_do_generowania.csv', encoding="utf8")
@@ -94,7 +94,7 @@ with uzytkownik:
         tab.__setitem__(header[2], surnames[randint(0, liczbaFilmow)])
         tab.__setitem__(header[3], datesOfBirth[randint(0, liczbaFilmow)])
         tab.__setitem__(header[4], logins[randint(0, liczbaFilmow)] + str(i))
-        tab.__setitem__(header[4], passwords[randint(0, liczbaFilmow)] + str(i))
+        tab.__setitem__(header[5], passwords[randint(0, liczbaFilmow)] + str(i))
         writer.writerow(tab)
         tab.clear()
 header = ['id', 'idUzytkownika', 'dataWstawienia', 'wartoscOceny']
@@ -106,7 +106,7 @@ with ocena:
     tab = {}
     for i in range(0, liczbaOcen):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(0, liczbaRezyserow))
+        tab.__setitem__(header[1], randint(0, liczbaRezyserow-1))
         tab.__setitem__(header[2], dates[randint(0, liczbaFilmow)])
         tab.__setitem__(header[3], randint(1, 5))
         writer.writerow(tab)
@@ -132,7 +132,7 @@ with aktorOcena:
     tab = {}
     for i in range(int(liczbaOcen/2), int(liczbaOcen/2) + int(liczbaOcen/4)):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(0, liczbaAktorow))
+        tab.__setitem__(header[1], randint(0, liczbaAktorow-1))
         writer.writerow(tab)
         tab.clear()
 header = ['idOceny', 'idRezyser']
@@ -144,7 +144,7 @@ with rezyserOcena:
     tab = {}
     for i in range(int(liczbaOcen/2) + int(liczbaOcen/4), liczbaOcen):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow))
+        tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow-1))
         writer.writerow(tab)
         tab.clear()
 header = ['idFilm', 'idRezyser']
@@ -156,7 +156,7 @@ with rezyserFilm:
     tab = {}
     for i in range(0, films.__len__()):
         tab.__setitem__(header[0], i)
-        tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow))
+        tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow-1))
         writer.writerow(tab)
         tab.clear()
 header = ['idFilm', 'idAktor']
@@ -168,6 +168,6 @@ with aktorFilm:
     tab = {}
     for i in range(0, liczbaAktorowGrajacychWFilmach):
         tab.__setitem__(header[0], randint(0, liczbaFilmow))
-        tab.__setitem__(header[1], randint(0, liczbaAktorow))
+        tab.__setitem__(header[1], randint(0, liczbaAktorow-1))
         writer.writerow(tab)
         tab.clear()

@@ -111,7 +111,7 @@ with ocena:
         tab.__setitem__(header[3], randint(1, 5))
         writer.writerow(tab)
         tab.clear()
-header = ['idOceny', 'idUzytkownika']
+header = ['idOceny', 'idFilmu']
 filmOcena = open('film_ocena.csv', 'w', newline='')
 with filmOcena:
     fnames = header

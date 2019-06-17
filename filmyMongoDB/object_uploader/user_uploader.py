@@ -16,10 +16,11 @@ class UserUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idUzytkownika = record[0]
+                idUzytkownika = int(record[0])
                 imie = record[1]
                 nazwisko = record[2]
-                dataUrodzenia = record[3]
+                data = record[3]
+                dataUrodzenia = int(data[6:10])
                 login = record[4]
                 haslo = record[5]
                 uzytkownik = Uzytkownik(idUzytkownika, imie, nazwisko, dataUrodzenia, login, haslo)

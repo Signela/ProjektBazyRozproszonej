@@ -16,10 +16,11 @@ class OpinionUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idOceny = record[0]
-                idUzytkownika = record[1]
-                dataWystawienia = record[2]
-                wartoscOceny = record[3]
+                idOceny = int(record[0])
+                idUzytkownika = int(record[1])
+                data = record[2]
+                dataWystawienia = int(data[6:10])
+                wartoscOceny = int(record[3])
 
                 uzytkownik = self.user_uploader.get_user_by_id(idUzytkownika)
                 ocena = Ocena(idOceny, wartoscOceny, dataWystawienia, uzytkownik)
@@ -37,8 +38,8 @@ class OpinionUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idOceny = record[0]
-                idRezysera = record[1]
+                idOceny = int(record[0])
+                idRezysera = int(record[1])
 
                 ocena = self.get_opinion_by_id(idOceny)
                 directorUploader.set_opinion_for_director(idRezysera, ocena)
@@ -49,8 +50,8 @@ class OpinionUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idOceny = record[0]
-                idAktora = record[1]
+                idOceny = int(record[0])
+                idAktora = int(record[1])
 
                 ocena = self.get_opinion_by_id(idOceny)
                 actorUploader.set_opinion_for_actor(idAktora, ocena)
@@ -61,8 +62,8 @@ class OpinionUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idOceny = record[0]
-                idFilmu = record[1]
+                idOceny = int(record[0])
+                idFilmu = int(record[1])
 
                 ocena = self.get_opinion_by_id(idOceny)
                 movieUploader.set_opinion_for_movie(idFilmu, ocena)

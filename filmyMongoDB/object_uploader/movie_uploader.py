@@ -1,6 +1,6 @@
 import csv
 from model.Film import Film
-from db_uploader.movies_collection import MovieDbUploader
+from db_uploader.collection import DbUploader
 
 
 class MovieUploader:
@@ -16,11 +16,12 @@ class MovieUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idFilmu = record[0]
+                idFilmu = int(record[0])
                 nazwa = record[1]
-                dlugoscTrwania = record[2]
-                dataDodania = record[3]
-                cena = record[4]
+                dlugoscTrwania = int(record[2])
+                data = record[3]
+                dataDodania = int(data[6:10])
+                cena = int(record[4])
                 rezyser = None
                 aktorzy = []
                 oceny = []
@@ -39,8 +40,8 @@ class MovieUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idFilmu = record[0]
-                idRezysera = record[1]
+                idFilmu = int(record[0])
+                idRezysera = int(record[1])
                 rezyser = directorUploader.get_director_by_id(idRezysera)
                 self.set_director_for_movie(idFilmu, rezyser)
 
@@ -55,8 +56,8 @@ class MovieUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idFilmu = record[0]
-                idAktora = record[1]
+                idFilmu = int(record[0])
+                idAktora = int(record[1])
                 aktor = actorUploader.get_actor_by_id(idAktora)
                 self.set_actor_for_movie(idFilmu, aktor)
 
@@ -67,8 +68,8 @@ class MovieUploader:
 
     def insert_movies_to_db(self, collection_name):
         JSON_list_with_movies = self.prepare_JSON_list_with_movies()
-        movieDbUploader = MovieDbUploader()
-        movieDbUploader.insert_documents_into_collection(collection_name, JSON_list_with_movies)
+        dbUploader = DbUploader()
+        dbUploader.insert_documents_into_collection(collection_name, JSON_list_with_movies)
 
     def prepare_JSON_list_with_movies(self):
         JSON_list_with_movies = []

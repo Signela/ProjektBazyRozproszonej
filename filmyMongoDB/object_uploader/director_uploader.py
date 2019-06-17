@@ -1,4 +1,6 @@
 import csv
+
+from db_uploader.collection import DbUploader
 from model.Rezyser import Rezyser
 
 
@@ -15,10 +17,11 @@ class DirectorUploader:
             csvreader = csv.reader(f, delimiter=';')
             next(csvreader, None)
             for record in csvreader:
-                idRezysera = record[0]
+                idRezysera = int(record[0])
                 imie = record[1]
                 nazwisko = record[2]
-                dataUrodzenia = record[3]
+                data = record[3]
+                dataUrodzenia = int(data[6:10])
                 oceny = []
                 rezyser = Rezyser(idRezysera, imie, nazwisko, dataUrodzenia, oceny)
                 rezyserzy.append(rezyser)
@@ -35,3 +38,15 @@ class DirectorUploader:
                 rezyser.add_opinion(opinion)
                 self.rezyserzy[idx] = rezyser
                 break
+
+    def insert_directors_to_db(self, collection_name):
+        JSON_list_with_directors = self.prepare_JSON_list_with_directors()
+        dbUploader = DbUploader()
+        dbUploader.insert_documents_into_collection(collection_name, JSON_list_with_directors)
+
+    def prepare_JSON_list_with_directors(self):
+        JSON_list_with_directors = []
+        for director in self.rezyserzy:
+            JSON_director = director.prepare_JSON_director()
+            JSON_list_with_directors.append(JSON_director)
+        return JSON_list_with_directors

@@ -1,7 +1,7 @@
 import pymongo
 
 
-class MovieDbUploader:
+class DbUploader:
 
     def __init__(self):
         self.myClient = pymongo.MongoClient("mongodb://localhost:27017/")

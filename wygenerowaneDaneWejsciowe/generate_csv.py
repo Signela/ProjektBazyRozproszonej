@@ -14,7 +14,7 @@ liczbaFilmow = 69
 liczbaAktorow = 100
 liczbaRezyserow = 30 + liczbaAktorow
 liczbaUzytkownikow = 1000
-liczbaOcen = 500000
+liczbaOcen = 300000
 liczbaAktorowGrajacychWFilmach = liczbaAktorow * 2
 profession = ["aktor", "rezyser"]
 
@@ -78,7 +78,7 @@ with film:
         tab.__setitem__(header[1], films[i])
         tab.__setitem__(header[2], times[i])
         tab.__setitem__(header[3], dates[i])
-        tab.__setitem__(header[4], randint(70, 300))
+        tab.__setitem__(header[4], randint(70, 150))
         writer.writerow(tab)
         tab.clear()
 header = ['id', 'imie', 'nazwisko', 'dataUrodzenia', 'login', 'haslo']
@@ -118,7 +118,7 @@ with filmOcena:
     writer = csv.DictWriter(filmOcena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(0, int(liczbaOcen/2)):
+    for i in range(0, int(liczbaOcen/3)):
         tab.__setitem__(header[0], i)
         tab.__setitem__(header[1], randint(0, liczbaFilmow))
         writer.writerow(tab)
@@ -130,7 +130,7 @@ with aktorOcena:
     writer = csv.DictWriter(aktorOcena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(int(liczbaOcen/2), int(liczbaOcen/2) + int(liczbaOcen/4)):
+    for i in range(int(liczbaOcen/3), int(liczbaOcen/3) + int(liczbaOcen/3)):
         tab.__setitem__(header[0], i)
         tab.__setitem__(header[1], randint(0, liczbaAktorow-1))
         writer.writerow(tab)
@@ -142,7 +142,7 @@ with rezyserOcena:
     writer = csv.DictWriter(rezyserOcena, fieldnames=fnames, delimiter=';')
     writer.writeheader()
     tab = {}
-    for i in range(int(liczbaOcen/2) + int(liczbaOcen/4), liczbaOcen):
+    for i in range(int(liczbaOcen/3) + int(liczbaOcen/3), liczbaOcen):
         tab.__setitem__(header[0], i)
         tab.__setitem__(header[1], randint(liczbaAktorow, liczbaRezyserow-1))
         writer.writerow(tab)
